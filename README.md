@@ -1,5 +1,5 @@
-Jenkins JNLP slaves recipes with various development environment
-================================================================
+Jenkins JNLP slaves recipes with various development environments
+=================================================================
 
 Start a Jenkins slave using JNLP with various development environments.
 
