@@ -63,7 +63,7 @@ RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-c
 # Additional tools & dependencies
 #
 
-RUN yum install -y git gzip2 fontconfig \
+RUN yum install -y git gzip2 fontconfig strace \
     && env | egrep "(JENKINS|JAVA)" > /etc/docker.properties
 
 USER jenkins-slave
