@@ -45,7 +45,7 @@ ENV PATH=/usr/share/sbt-launcher-packaging-${SBT_VERSION}/bin:${PATH}
 RUN curl -sSLo /usr/share/sbt-${SBT_VERSION}.tgz https://dl.bintray.com/sbt/native-packages/sbt/${SBT_VERSION}/sbt-${SBT_VERSION}.tgz \
     && cd /usr/share \
     && tar xvf sbt-${SBT_VERSION}.tgz \
-    && rm -f sbt-${SBT_VERSION}.tgz
+    && rm -f sbt-${SBT_VERSION}.tgz \
     && mkdir -p ${HOME}/.sbt/${SBT_VERSION_MAJOR}/plugins/ \
     && echo 'credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")' > ${HOME}/.sbt/${SBT_VERSION_MAJOR}/plugins/credentials.sbt
 
@@ -64,7 +64,8 @@ RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-c
 #
 
 RUN yum install -y git gzip2 fontconfig strace \
-    && env | egrep "(JENKINS|JAVA)" > /etc/docker.properties
+    && env | egrep "(JENKINS|JAVA)" > /etc/docker.properties \
+    && chown -R jenkins-slave ${HOME}
 
 USER jenkins-slave
 VOLUME ${HOME}
