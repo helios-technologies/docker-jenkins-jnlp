@@ -2,10 +2,6 @@ FROM centos:7
 
 MAINTAINER Camille Meulien <camille.meulien@gmail.com>
 
-COPY entrypoint.sh /usr/bin/
-RUN chmod 755 /usr/bin/entrypoint.sh
-ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-
 #
 # Install Java
 #
@@ -63,9 +59,18 @@ RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-c
 # Additional tools & dependencies
 #
 
-RUN yum install -y git gzip2 fontconfig strace \
+RUN yum install -y git gzip2 fontconfig strace wget \
     && env | egrep "(JENKINS|JAVA)" > /etc/docker.properties \
     && chown -R jenkins-slave ${HOME}
+
+ARG KAIGARA_VERSION=v0.0.2
+RUN wget --quiet https://github.com/mod/kaigara/releases/download/${KAIGARA_VERSION}/kaigara-linux-amd64-${KAIGARA_VERSION}.tar.gz \
+    && tar -C /usr/local/bin -xzvf kaigara-linux-amd64-${KAIGARA_VERSION}.tar.gz \
+    && mkdir -p /opt/provision/operations /opt/provision/resources
+
+COPY entrypoint.sh /usr/bin/
+RUN chmod 755 /usr/bin/entrypoint.sh
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
 USER jenkins-slave
 VOLUME ${HOME}

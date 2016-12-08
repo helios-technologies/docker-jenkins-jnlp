@@ -34,6 +34,10 @@ if [ $# -eq 1 ]; then
 
 else
 
+  if [[ -f /opt/provision/metadata.yml ]]; then
+    kaigara provision
+  fi
+
   # if -tunnel is not provided try env vars
   if [[ "$@" != *"-tunnel "* ]]; then
     if [ ! -z "$JENKINS_TUNNEL" ]; then
