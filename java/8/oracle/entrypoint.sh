@@ -27,16 +27,16 @@
 # * JENKINS_TUNNEL : HOST:PORT for a tunnel to route TCP traffic to jenkins host, when jenkins can't be directly accessed over network
 # * JENKINS_URL : alternate jenkins URL
 
+if [[ -f /opt/provision/metadata.yml ]]; then
+  kaigara provision
+fi
+
 if [ $# -eq 1 ]; then
 
   # if `docker run` only has one arguments, we assume user is running alternate command like `bash` to inspect the image
   exec "$@"
 
 else
-
-  if [[ -f /opt/provision/metadata.yml ]]; then
-    kaigara provision
-  fi
 
   # if -tunnel is not provided try env vars
   if [[ "$@" != *"-tunnel "* ]]; then

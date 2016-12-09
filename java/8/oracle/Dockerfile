@@ -65,8 +65,10 @@ RUN yum install -y git gzip2 fontconfig strace wget \
 
 ARG KAIGARA_VERSION=v0.0.2
 RUN wget --quiet https://github.com/mod/kaigara/releases/download/${KAIGARA_VERSION}/kaigara-linux-amd64-${KAIGARA_VERSION}.tar.gz \
-    && tar -C /usr/local/bin -xzvf kaigara-linux-amd64-${KAIGARA_VERSION}.tar.gz \
-    && mkdir -p /opt/provision/operations /opt/provision/resources
+    && tar -C /usr/local/bin -xzvf kaigara-linux-amd64-${KAIGARA_VERSION}.tar.gz
+
+COPY ./operations/ /opt/provision/operations/
+COPY ./resources /opt/provision/resources/
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod 755 /usr/bin/entrypoint.sh
