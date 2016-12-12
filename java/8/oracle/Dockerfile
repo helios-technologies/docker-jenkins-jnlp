@@ -63,12 +63,12 @@ RUN yum install -y git gzip2 fontconfig strace wget \
     && env | egrep "(JENKINS|JAVA)" > /etc/docker.properties \
     && chown -R jenkins-slave ${HOME}
 
-ARG KAIGARA_VERSION=v0.0.3
-RUN wget --quiet https://github.com/mod/kaigara/releases/download/${KAIGARA_VERSION}/kaigara-linux-amd64-${KAIGARA_VERSION}.tar.gz \
-    && tar -C /usr/local/bin -xzvf kaigara-linux-amd64-${KAIGARA_VERSION}.tar.gz
+ARG KAIGARA_VERSION=v0.0.3.1
+RUN wget --quiet https://github.com/calj/kaigara/releases/download/${KAIGARA_VERSION}/kaigara -O /usr/local/bin/kaigara \
+    && chmod 755 /usr/local/bin/kaigara
 
-COPY ./operations/ /opt/provision/operations/
-COPY ./resources /opt/provision/resources/
+COPY ./operations/ /opt/kaigara/operations/
+COPY ./resources /etc/kaigara/resources/
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod 755 /usr/bin/entrypoint.sh
