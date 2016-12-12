@@ -63,7 +63,7 @@ RUN yum install -y git gzip2 fontconfig strace wget \
     && env | egrep "(JENKINS|JAVA)" > /etc/docker.properties \
     && chown -R jenkins-slave ${HOME}
 
-ARG KAIGARA_VERSION=v0.0.2
+ARG KAIGARA_VERSION=v0.0.3
 RUN wget --quiet https://github.com/mod/kaigara/releases/download/${KAIGARA_VERSION}/kaigara-linux-amd64-${KAIGARA_VERSION}.tar.gz \
     && tar -C /usr/local/bin -xzvf kaigara-linux-amd64-${KAIGARA_VERSION}.tar.gz
 

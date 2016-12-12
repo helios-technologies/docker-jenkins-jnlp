@@ -27,7 +27,9 @@
 # * JENKINS_TUNNEL : HOST:PORT for a tunnel to route TCP traffic to jenkins host, when jenkins can't be directly accessed over network
 # * JENKINS_URL : alternate jenkins URL
 
-if [[ -f /opt/provision/metadata.yml ]]; then
+KAIGARA_METADATA=${KAIGARA_METADATA-/etc/kaigara/metadata}
+
+if [[ -e ${KAIGARA_METADATA} ]]; then
   kaigara provision
 fi
 
