@@ -47,7 +47,7 @@ RUN curl -sSLo /usr/share/sbt-${SBT_VERSION}.tgz https://dl.bintray.com/sbt/nati
 # Install Jenkins remoting jar
 #
 
-ARG JENKINS_REMOTING_VERSION=2.62.2
+ARG JENKINS_REMOTING_VERSION=2.62.4
 RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/${JENKINS_REMOTING_VERSION}/remoting-${JENKINS_REMOTING_VERSION}.jar \
     && useradd -d ${HOME} -m jenkins-slave \
     && chmod 755 /usr/share/jenkins \
