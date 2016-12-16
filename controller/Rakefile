@@ -1,0 +1,27 @@
+require 'erb'
+require 'fileutils'
+
+DockerApiVersions = [
+  {docker: "1.11", 	api: "1.23"},
+  {docker: "1.10", 	api: "1.22"},
+  {docker: "1.9",  	api: "1.21"},
+  {docker: "1.8",  	api: "1.20"},
+  {docker: "1.7",  	api: "1.19"},
+  {docker: "1.6",  	api: "1.18"},
+]
+
+task :generate do
+  tpl_dockerfile = ERB.new(File.read("Dockerfile.erb"))
+  tpl_readme = ERB.new(File.read("README.md.erb"))
+  DockerApiVersions.each do |version|
+    path = "docker-#{version[:api]}"
+    Dir.mkdir(path) unless Dir.exists?(path)
+    File.open(File.join(path, "Dockerfile"), "w") do |f|
+      f.write(tpl_dockerfile.result(binding))
+    end
+    File.open(File.join(path, "README.md"), "w") do |f|
+      f.write(tpl_readme.result(binding))
+    end
+    FileUtils.cp("entrypoint.sh", path)
+  end
+end
