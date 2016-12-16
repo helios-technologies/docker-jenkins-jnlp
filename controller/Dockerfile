@@ -21,11 +21,12 @@ RUN apt-get update \
 # Install tools to control various Cloud platforms
 #
 
+# awscli
 RUN apt-get install -y python-pip \
     && pip install awscli
 
+# gcloud
 ENV PATH=/usr/share/google-cloud-sdk/bin/:${PATH}
-
 ARG GCLOUD_VERSION=138.0.0
 RUN cd /usr/share/ \
     && curl -sSLO https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${GCLOUD_VERSION}-linux-x86_64.tar.gz \
@@ -34,3 +35,8 @@ RUN cd /usr/share/ \
     && ./google-cloud-sdk/install.sh \
     && yes | gcloud components install kubectl
 
+# docker
+RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D \
+    && echo deb https://apt.dockerproject.org/repo debian-jessie main > /etc/apt/sources.list.d/docker.list \
+    && apt-get update \
+    && apt-get install -y docker-engine
