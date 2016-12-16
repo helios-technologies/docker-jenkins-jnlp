@@ -2,6 +2,7 @@ require 'erb'
 require 'fileutils'
 
 DockerApiVersions = [
+  {docker: "1.12", 	api: "1.24"},
   {docker: "1.11", 	api: "1.23"},
   {docker: "1.10", 	api: "1.22"},
   {docker: "1.9",  	api: "1.21"},
