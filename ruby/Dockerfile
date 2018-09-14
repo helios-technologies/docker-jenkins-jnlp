@@ -1,4 +1,4 @@
-FROM ruby:2.3
+FROM ruby:2.5
 
 MAINTAINER Camille Meulien <camille.meulien@gmail.com>
 
@@ -11,7 +11,7 @@ ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 #
 
 RUN apt-get update \
-    && apt-get install -y openjdk-7-jre-headless
+    && apt-get install -y openjdk-8-jre-headless
 
 #
 # Install NodeJS
@@ -25,8 +25,9 @@ RUN npm install -g bower gulp
 #
 # Install Jenkins remoting jar
 #
+ENV HOME=/home/jenkins-slave
 
-ARG JENKINS_REMOTING_VERSION=2.62.4
+ARG JENKINS_REMOTING_VERSION=3.26
 RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/${JENKINS_REMOTING_VERSION}/remoting-${JENKINS_REMOTING_VERSION}.jar \
     && useradd -d ${HOME} -m jenkins-slave \
     && chmod 755 /usr/share/jenkins \
@@ -36,7 +37,6 @@ RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-c
 # End
 #
 
-ENV HOME=/home/jenkins-slave
 USER jenkins-slave
 VOLUME ${HOME}
 WORKDIR ${HOME}
